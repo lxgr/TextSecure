@@ -102,6 +102,7 @@ public class ApplicationPreferencesActivity extends PassphraseRequiredSherlockPr
     initializeIdentitySelection();
     initializePlatformSpecificOptions();
     initializeSmsFallbackOption();
+    initializeStoreUnencryptedSmsOption();
     initializePushMessagingToggle();
 
     this.findPreference(TextSecurePreferences.CHANGE_PASSPHRASE_PREF)
@@ -184,6 +185,7 @@ public class ApplicationPreferencesActivity extends PassphraseRequiredSherlockPr
   private void initializePlatformSpecificOptions() {
     PreferenceGroup    generalCategory    = (PreferenceGroup) findPreference("general_category");
     Preference         defaultPreference  = findPreference(KITKAT_DEFAULT_PREF);
+    Preference         storeUnencryptedSmsPreference = findPreference(TextSecurePreferences.STORE_UNENCRYPTED_SMS_PREF);
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
       generalCategory.removePreference(findPreference(TextSecurePreferences.ALL_SMS_PREF));
@@ -199,6 +201,7 @@ public class ApplicationPreferencesActivity extends PassphraseRequiredSherlockPr
       }
     } else {
       generalCategory.removePreference(defaultPreference);
+      generalCategory.removePreference(storeUnencryptedSmsPreference);
     }
   }
 
@@ -211,6 +214,7 @@ public class ApplicationPreferencesActivity extends PassphraseRequiredSherlockPr
         allowSmsPreference.setEnabled(false);
         allowSmsPreference.setChecked(true);
         allowSmsPreference.setSummary(R.string.preferences__allow_sms_fallback_disabled_reason);
+
       } else {
         allowSmsPreference.setEnabled(true);
         allowSmsPreference.setSummary(R.string.preferences__send_and_receive_sms_messages_when_push_is_not_available);
@@ -229,6 +233,23 @@ public class ApplicationPreferencesActivity extends PassphraseRequiredSherlockPr
       }
     }
   }
+
+  private void initializeStoreUnencryptedSmsOption() {
+    CheckBoxPreference storeUnencryptedSmsPreference =
+        (CheckBoxPreference) findPreference(TextSecurePreferences.STORE_UNENCRYPTED_SMS_PREF);
+
+      if (Util.isDefaultSmsProvider(this)) {
+        storeUnencryptedSmsPreference.setEnabled(false);
+        storeUnencryptedSmsPreference.setChecked(true);
+        storeUnencryptedSmsPreference.setSummary(R.string.preferences__store_unencrypted_sms_messages_disabled_reason);
+
+      } else {
+        storeUnencryptedSmsPreference.setEnabled(true);
+        storeUnencryptedSmsPreference.setSummary(R.string.preferences__store_unencrypted_sms_messages);
+      }
+
+  }
+
 
   private void initializeEditTextSummary(final EditTextPreference preference) {
     if (preference.getText() == null) {
@@ -305,6 +326,7 @@ public class ApplicationPreferencesActivity extends PassphraseRequiredSherlockPr
                key.equals(TextSecurePreferences.REGISTERED_GCM_PREF))
     {
       initializeSmsFallbackOption();
+      initializeStoreUnencryptedSmsOption();
     }
   }
 

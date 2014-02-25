@@ -46,8 +46,14 @@ public class TextSecurePreferences {
   private static final String LOCAL_REGISTRATION_ID_PREF       = "pref_local_registration_id";
   public  static final String ALLOW_SMS_FALLBACK_PREF          = "pref_allow_sms_traffic_out";
 
+  public  static final String STORE_UNENCRYPTED_SMS_PREF       = "pref_store_unencrypted_sms";
+
   public static boolean isSmsFallbackEnabled(Context context) {
     return getBooleanPreference(context, ALLOW_SMS_FALLBACK_PREF, true);
+  }
+
+  public static boolean isStoreUnencryptedSmsEnabled(Context context) {
+    return getBooleanPreference(context, STORE_UNENCRYPTED_SMS_PREF, true);
   }
 
   public static int getLocalRegistrationId(Context context) {

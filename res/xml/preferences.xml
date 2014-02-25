@@ -32,6 +32,12 @@
                             android:title="@string/preferences__allow_sms_fallback"
                             android:summary="@string/preferences__send_and_receive_sms_messages_when_push_is_not_available"/>
 
+        <CheckBoxPreference android:defaultValue="true"
+                            android:enabled="false"
+                            android:key="pref_store_unencrypted_sms"
+                            android:title="@string/preferences__store_unencrypted_sms"
+                            android:summary="@string/preferences__store_unencrypted_sms_messages"/>
+
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/preferences__notifications">
         <CheckBoxPreference android:key="pref_key_enable_notifications"
